@@ -4,11 +4,13 @@ import (
 	"context"
 	"log"
 	"slices"
+	"sync"
 )
 
 type Lifecycle struct {
 	resources []Resource
 	context   context.Context
+	wg        sync.WaitGroup
 }
 
 func NewLifecycle(context context.Context) *Lifecycle {
@@ -27,7 +29,9 @@ func (l *Lifecycle) run() error {
 		if err := r.run(); err != nil {
 			log.Print(err)
 		}
+		l.wg.Add(1)
 	}
+	l.wg.Wait()
 	return nil
 }
 
@@ -37,6 +41,7 @@ func (l *Lifecycle) stop() error {
 		if err := r.stop(); err != nil {
 			log.Print(err)
 		}
+		l.wg.Done()
 	}
 	return nil
 }
