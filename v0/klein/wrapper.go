@@ -15,3 +15,7 @@ func (w *Wrapper) run() error {
 func (w *Wrapper) stop() error {
 	return w.OnStop()
 }
+
+func (w *Wrapper) setContext(ctx context.Context) {
+	w.ctx = ctx
+}

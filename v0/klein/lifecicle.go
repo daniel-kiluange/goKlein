@@ -20,8 +20,10 @@ func NewLifecycle(context context.Context) *Lifecycle {
 	}
 }
 
-func (l *Lifecycle) Append(r Resource) {
-	l.resources = append(l.resources, r)
+func (l *Lifecycle) AppendToLifecycle(w *Wrapper) *Wrapper {
+	w.setContext(context.WithValue(l.context, "resource", "wrapper"))
+	l.resources = append(l.resources, w)
+	return w
 }
 
 func (l *Lifecycle) run() error {

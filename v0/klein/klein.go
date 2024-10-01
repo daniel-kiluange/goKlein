@@ -23,9 +23,7 @@ func (k *Klein) Run() error {
 }
 
 func (k *Klein) Provide(wrapper func(lc *Lifecycle) *Wrapper) {
-	w := wrapper(k.lifecycle)
-	w.ctx = k.ctx
-	k.lifecycle.Append(w)
+	wrapper(k.lifecycle)
 }
 
 func (k *Klein) run() error {
@@ -34,7 +32,7 @@ func (k *Klein) run() error {
 }
 
 func (k *Klein) stop() error {
-	log.Print("Stopping Klein")
+	defer log.Print("Stopping Klein")
 	return k.lifecycle.stop()
 }
 

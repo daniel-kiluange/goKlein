@@ -7,12 +7,12 @@ import (
 )
 
 func newHttpServer(lc *klein.Lifecycle) *klein.Wrapper {
-	return &klein.Wrapper{
+	return lc.AppendToLifecycle(&klein.Wrapper{
 		OnStart: func() error {
 			var err error
 			httpMux := http.NewServeMux()
 			println("Starting HTTP server")
-			http.HandleFunc("/get", func(w http.ResponseWriter, r *http.Request) {
+			http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 				w.Write([]byte("Hello, World!"))
 			})
 
@@ -25,8 +25,7 @@ func newHttpServer(lc *klein.Lifecycle) *klein.Wrapper {
 			println("Stopping HTTP server")
 			return nil
 		},
-	}
-
+	})
 }
 
 func main() {
