@@ -1,6 +1,9 @@
 package klein
 
-import "context"
+import (
+	"context"
+	"log"
+)
 
 type Klein struct {
 	ctx       context.Context
@@ -26,10 +29,12 @@ func (k *Klein) Provide(wrapper func(lc *Lifecycle) *Wrapper) {
 }
 
 func (k *Klein) run() error {
+	log.Print("Running Klein")
 	return k.lifecycle.run()
 }
 
 func (k *Klein) stop() error {
+	log.Print("Stopping Klein")
 	return k.lifecycle.stop()
 }
 

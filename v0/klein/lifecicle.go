@@ -36,6 +36,7 @@ func (l *Lifecycle) run() error {
 }
 
 func (l *Lifecycle) stop() error {
+	log.Print("Trying to stop gracefully")
 	slices.Reverse(l.resources)
 	for _, r := range l.resources {
 		if err := r.stop(); err != nil {

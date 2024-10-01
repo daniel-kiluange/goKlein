@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/daniel-kiluange/goKlein/v0/klein"
 	"net/http"
+	"time"
 )
 
 func newHttpServer(lc *klein.Lifecycle) *klein.Wrapper {
@@ -30,7 +31,11 @@ func newHttpServer(lc *klein.Lifecycle) *klein.Wrapper {
 
 func main() {
 	k := klein.NewKlein()
-	defer k.Stop()
+
+	go func() {
+		time.Sleep(5 * time.Second)
+		k.Stop()
+	}()
 
 	k.Provide(newHttpServer)
 
