@@ -4,6 +4,22 @@
 ```shell
 go get github.com/daniel-kiluange/goKlein
 ```
+```go
+func main() {
+	k := klein.NewKlein()
+
+	go func() {
+		time.Sleep(5 * time.Second)
+		k.Stop()
+	}()
+
+	k.Provide(newHttpServer)
+
+	k.Run()
+
+}
+```
+
 ### Embedding code
 ```go
 func newHttpServer(lc *klein.Lifecycle) *klein.Wrapper {
