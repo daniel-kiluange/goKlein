@@ -28,10 +28,10 @@ func (l *Lifecycle) AppendToLifecycle(w *Wrapper) *Wrapper {
 
 func (l *Lifecycle) run() error {
 	for _, r := range l.resources {
+		l.wg.Add(1)
 		if err := r.run(); err != nil {
 			log.Print(err)
 		}
-		l.wg.Add(1)
 	}
 	l.wg.Wait()
 	return nil
